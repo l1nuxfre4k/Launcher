@@ -40,7 +40,7 @@ public class modUpdateCheck {
 		String[] nextLine;
 		while ((nextLine = reader.readNext()) != null) {
 		    if (!nextLine[0].startsWith("#")) {
-			if (Integer.parseInt(nextLine[2]) >= modpackVersion) {
+			if (Integer.parseInt(nextLine[2]) > modpackVersion) {
 			modpackNeedsUpdate = true;
 			}
 		    }

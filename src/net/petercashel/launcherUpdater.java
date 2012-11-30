@@ -15,7 +15,7 @@ public class launcherUpdater {
 	public static Boolean launcherNeedsUpdate = false;
 	
 	//Hard Coded Launcher version
-	private static int launcherVersion = 20121129;
+	private static int launcherVersion = 20121130;
 	
 	public static void doUpdateCheck() {
 		GameUpdater.subtaskMessage = "";
