@@ -15,7 +15,7 @@ public class launcherUpdater {
 	public static Boolean launcherNeedsUpdate = false;
 	
 	//Hard Coded Launcher version
-	private static int launcherVersion = 20121127;
+	private static int launcherVersion = 20121128;
 	
 	public static void doUpdateCheck() {
 		System.out.println(launcherNeedsUpdate);

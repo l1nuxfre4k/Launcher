@@ -133,7 +133,9 @@ public class modUpdater {
 		    String [] nextLine;
 		    while ((nextLine = reader.readNext()) != null) {
 		       GameUpdater.subtaskMessage = "Downloading " + nextLine[1];
+		       if (Integer.parseInt(nextLine[2]) != 2) {
 		       downloadFile(nextLine[0],modDir,nextLine[1]);
+		       }
 		       GameUpdater.percentage = GameUpdater.percentage + 1;
 		    }
 		} catch (IOException e) {
