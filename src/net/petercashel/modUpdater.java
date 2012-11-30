@@ -155,7 +155,7 @@ public class modUpdater {
 	    while ((nextLine = reader.readNext()) != null) {
 		if (!nextLine[0].startsWith("#")) {
 		    downloadFile(("http://assets.minecraft.net/" + nextLine[0] + "/minecraft.jar"), binDir, "base_minecraft.jar");
-		    modpackVersion = Integer.parseInt(nextLine[1]);
+		    modpackVersion = Integer.parseInt(nextLine[2]);
 		}
 	    }
 	} catch (IOException e) {
