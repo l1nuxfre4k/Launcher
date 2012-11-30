@@ -27,9 +27,11 @@ public class launcherUpdater {
 			CSVReader reader = new CSVReader(new FileReader(tmpDir + "version.csv"));
 		    String [] nextLine;
 		    while ((nextLine = reader.readNext()) != null) {
-		    	if (Integer.parseInt(nextLine[1]) != (launcherVersion)) {
-		    	launcherNeedsUpdate = true;
-		    }
+		    	if (!nextLine[0].startsWith("#")) {
+		    		if (Integer.parseInt(nextLine[1]) != (launcherVersion)) {
+		    			launcherNeedsUpdate = true;
+		    		}
+		    	}
 		    }
 	    } catch (IOException e) {
 				e.printStackTrace();
