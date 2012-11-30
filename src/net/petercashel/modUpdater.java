@@ -180,7 +180,6 @@ public class modUpdater {
 		//Rebuild jar
 		stateString = "Completing Installation...";    
 		GameUpdater.subtaskMessage = "Repacking minecraft.jar";
-		System.out.println(getPath());
 		repackJar(binDir, tmpDir);
 		GameUpdater.subtaskMessage = "Cleaning up";
 		FileUtils.deleteQuietly(new File(jarDir));
@@ -302,8 +301,8 @@ public class modUpdater {
 
 		try {
 			String osName = System.getProperty("os.name");
-			System.out.println("Your OS is Detected As");
-			System.out.println(osName);
+//			System.out.println("Your OS is Detected As");
+//			System.out.println(osName);
 			if (osName.startsWith("Mac OS")) {
 				//Need to test on mac
 				

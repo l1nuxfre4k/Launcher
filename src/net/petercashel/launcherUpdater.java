@@ -15,10 +15,9 @@ public class launcherUpdater {
 	public static Boolean launcherNeedsUpdate = false;
 	
 	//Hard Coded Launcher version
-	private static int launcherVersion = 20121128;
+	private static int launcherVersion = 20121129;
 	
 	public static void doUpdateCheck() {
-		System.out.println(launcherNeedsUpdate);
 		GameUpdater.subtaskMessage = "";
 		stateString = "Checking for launcher updates";
 		GameUpdater.percentage = 70;
@@ -28,9 +27,6 @@ public class launcherUpdater {
 			CSVReader reader = new CSVReader(new FileReader(tmpDir + "version.csv"));
 		    String [] nextLine;
 		    while ((nextLine = reader.readNext()) != null) {
-		    //    downloadFile(( "http://assets.minecraft.net/" + nextLine[0] + "/minecraft.jar" ),binDir,"base_minecraft.jar");
-		    	System.out.println(launcherVersion);
-		    	System.out.println(nextLine[1]);
 		    	if (Integer.parseInt(nextLine[1]) != (launcherVersion)) {
 		    	launcherNeedsUpdate = true;
 		    }
@@ -38,9 +34,7 @@ public class launcherUpdater {
 	    } catch (IOException e) {
 				e.printStackTrace();
 			}
-		System.out.println(launcherNeedsUpdate);
 		if (launcherNeedsUpdate == true) {
-			System.out.println(launcherNeedsUpdate);
 			doUpdate();
 		}
 		
