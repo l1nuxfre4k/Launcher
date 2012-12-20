@@ -46,37 +46,42 @@ public class OptionsPanel extends JDialog {
 
 		JPanel optionsPanel = new JPanel(new BorderLayout());
 		JPanel labelPanel = new JPanel(new GridLayout(0, 1));
+		//labelPanel.setSize(WIDTH, HEIGHT);
 		JPanel fieldPanel = new JPanel(new GridLayout(0, 1));
 		optionsPanel.add(labelPanel, "West");
-		optionsPanel.add(fieldPanel, "Center");
+		optionsPanel.add(fieldPanel, "East");
 
 		final JButton forceButton = new JButton("Force update!");
 		forceButton.setDefaultCapable(false);
+		forceButton.setSize(20, 5);
 		forceButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				GameUpdater.forceUpdate = true;
 				forceButton.setText("Will force!");
+				forceButton.setSize(20, 5);
 				forceButton.setEnabled(false);
 			}
 		});
-		labelPanel.add(new JLabel("Force game update: ", 4));
+		labelPanel.add(new JLabel("Force game update: ", 2));
 		fieldPanel.add(forceButton);
-		labelPanel.add(new JLabel("Do mod update: ", 4));
+		labelPanel.add(new JLabel("Do mod update: ", 2));
 		
 		final JButton modButton = new JButton("Update Mods?");
 		modButton.setDefaultCapable(false);
+		modButton.setSize(20, 5);
 		modButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				modUpdater.modUpdate = true;
 				modButton.setText("Update Mods!");
+				modButton.setSize(20, 5);
 				modButton.setEnabled(false);
 			}
 		});
 		fieldPanel.add(modButton);
 		
-		labelPanel.add(new JLabel("Game location on disk: ", 4));
+		labelPanel.add(new JLabel("Game location on disk: ", 2));
 		
 
 		if (LoginForm.mcdir == "Original") {
@@ -178,11 +183,12 @@ public class OptionsPanel extends JDialog {
 					newFolder.mkdir();
 					JOptionPane.showMessageDialog(null, "Folder " + textField.getText() + " created!");
 					folder = textField.getText();
+					
 				}
 				textField.setText("");
 			}
 		});
-		textField = new JTextField(20);
+		textField = new JTextField(30);
 
 		JLabel lblCreateFolder = new JLabel("Create Folder");
 		labelPanel.add(lblCreateFolder);

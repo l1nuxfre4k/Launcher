@@ -13,17 +13,17 @@ public class launcherUpdater {
 	public static String stateString = "Starting Launcher Updater";
 	static String tmpDir = modUpdater.getPath() + "temp" + File.separator;
 	public static Boolean launcherNeedsUpdate = false;
-	
+
 	//Hard Coded Launcher version
-	private static int launcherVersion = 20121130;
+	private static int launcherVersion = 20121211;
 	
 	public static void doUpdateCheck() {
 		GameUpdater.subtaskMessage = "";
 		stateString = "Checking for launcher updates";
-		GameUpdater.percentage = 70;
+		GameUpdater.percentage = 05;
 		//Download basemods + correct mc jar
 		try {
-			modUpdater.downloadFile("https://dl.dropbox.com/u/13174207/PacasCraft/version.csv",tmpDir,"version.csv");
+			modUpdater.downloadFile("http://mcupdate.petercashel.net/csv/version.csv",tmpDir,"version.csv");
 			CSVReader reader = new CSVReader(new FileReader(tmpDir + "version.csv"));
 		    String [] nextLine;
 		    while ((nextLine = reader.readNext()) != null) {
@@ -44,7 +44,7 @@ public class launcherUpdater {
 	
 	public static void doUpdate() {
 	try {
-		modUpdater.downloadFile("https://dl.dropbox.com/u/13174207/PacasCraft/Launcher.jar", getJarDir(),"New_Launcher.jar");
+		modUpdater.downloadFile("http://mcupdate.petercashel.net/Launcher.jar", getJarDir(),"New_Launcher.jar");
 			GameUpdater.subtaskMessage = "Replace Launcher.jar with New_Launcher.jar";
 			try {
 				Thread.sleep(10000);

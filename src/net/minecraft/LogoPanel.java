@@ -20,7 +20,7 @@ public class LogoPanel extends JPanel {
 			int w = src.getWidth();
 			int h = src.getHeight();
 			bgImage = src.getScaledInstance(w, h, 16);
-			setPreferredSize(new Dimension(w + 32, h + 32));
+			setPreferredSize(new Dimension(w + 32, h + 16));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -33,6 +33,6 @@ public class LogoPanel extends JPanel {
 
 	@Override
 	public void paintComponent(Graphics g2) {
-		g2.drawImage(bgImage, 24, 24, null);
+		g2.drawImage(bgImage, 32, 32, null);
 	}
 }

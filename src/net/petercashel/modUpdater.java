@@ -34,6 +34,7 @@ public class modUpdater {
     static String binDir = getPath() + "bin" + File.separator;
     static String tmpDir = getPath() + "temp" + File.separator;
     static String jarDir = getPath() + "temp" + File.separator + "jar" + File.separator;
+    static String fileInProgress = "";
 
     public static void run() {
 	System.out.println("Mod Updater Starting");
@@ -91,16 +92,21 @@ public class modUpdater {
 
 	// Grab some tools silently
 	try {
-	    downloadFile("https://dl.dropbox.com/u/13174207/PacasCraft/tools.csv", tmpDir, "tools.csv");
+	    fileInProgress = "tools.csv";
+	    downloadFile("http://mcupdate.petercashel.net/csv/tools.csv", tmpDir, "tools.csv");
 	    CSVReader reader = new CSVReader(new FileReader(tmpDir + "tools.csv"));
 	    String[] nextLine;
 	    while ((nextLine = reader.readNext()) != null) {
 		if (!nextLine[0].startsWith("#")) {
+		    System.out.println(nextLine[1]);
+		    fileInProgress = nextLine[1];
 		    downloadFile(nextLine[0], tmpDir, nextLine[1]);
 		}
 	    }
 	} catch (IOException e) {
 	    e.printStackTrace();
+	    System.out.println("Error During Download Of " + fileInProgress);
+	    System.exit(1);
 	}
 
 	// Download Coremods
@@ -109,17 +115,22 @@ public class modUpdater {
 	GameUpdater.percentage = 20;
 	FileUtils.deleteQuietly(new File(coremodDir));
 	try {
-	    downloadFile("https://dl.dropbox.com/u/13174207/PacasCraft/coremods.csv", tmpDir, "coremods.csv");
+	    fileInProgress = "coremods.csv";
+	    downloadFile("http://mcupdate.petercashel.net/csv/coremods.csv", tmpDir, "coremods.csv");
 	    CSVReader reader = new CSVReader(new FileReader(tmpDir + "coremods.csv"));
 	    String[] nextLine;
 	    while ((nextLine = reader.readNext()) != null) {
 		if (!nextLine[0].startsWith("#")) {
 		    GameUpdater.subtaskMessage = "Downloading " + nextLine[1];
+		    System.out.println(nextLine[1]);
+		    fileInProgress = nextLine[1];
 		    downloadFile(nextLine[0], coremodDir, nextLine[1]);
 		}
 	    }
 	} catch (IOException e) {
 	    e.printStackTrace();
+	    System.out.println("Error During Download Of " + fileInProgress);
+	    System.exit(1);
 	}
 
 	GameUpdater.subtaskMessage = "";
@@ -128,20 +139,25 @@ public class modUpdater {
 	FileUtils.deleteQuietly(new File(modDir));
 	// Download Mods
 	try {
-	    downloadFile("https://dl.dropbox.com/u/13174207/PacasCraft/mods.csv", tmpDir, "mods.csv");
+	    fileInProgress = "mods.csv";
+	    downloadFile("http://mcupdate.petercashel.net/csv/mods.csv", tmpDir, "mods.csv");
 	    CSVReader reader = new CSVReader(new FileReader(tmpDir + "mods.csv"));
 	    String[] nextLine;
 	    while ((nextLine = reader.readNext()) != null) {
 		if (!nextLine[0].startsWith("#")) {
 		    GameUpdater.subtaskMessage = "Downloading " + nextLine[1];
 		    if (Integer.parseInt(nextLine[2]) != 2) {
-			downloadFile(nextLine[0], modDir, nextLine[1]);
+			System.out.println(nextLine[1]);
+			    fileInProgress = nextLine[1];
+			    downloadFile(nextLine[0], modDir, nextLine[1]);
 		    }
 		    GameUpdater.percentage = GameUpdater.percentage + 1;
 		}
 	    }
 	} catch (IOException e) {
 	    e.printStackTrace();
+	    System.out.println("Error During Download Of " + fileInProgress);
+	    System.exit(1);
 	}
 
 	GameUpdater.subtaskMessage = "";
@@ -149,38 +165,45 @@ public class modUpdater {
 	GameUpdater.percentage = 70;
 	// Download basemods + correct mc jar
 	try {
-	    // downloadFile("https://dl.dropbox.com/u/13174207/PacasCraft/version.csv",tmpDir,"version.csv");
+	    // downloadFile(urlBase + "csv/version.csv",tmpDir,"version.csv");
 	    CSVReader reader = new CSVReader(new FileReader(tmpDir + "version.csv"));
 	    String[] nextLine;
 	    while ((nextLine = reader.readNext()) != null) {
 		if (!nextLine[0].startsWith("#")) {
+		    fileInProgress = "minecraft additions";
 		    downloadFile(("http://assets.minecraft.net/" + nextLine[0] + "/minecraft.jar"), binDir, "base_minecraft.jar");
 		    modpackVersion = Integer.parseInt(nextLine[2]);
 		}
 	    }
 	} catch (IOException e) {
 	    e.printStackTrace();
+	    System.out.println("Error During Download Of " + fileInProgress);
+	    System.exit(1);
 	}
 
 	GameUpdater.subtaskMessage = "";
 	stateString = "Downloading and Installing basemods";
 	GameUpdater.percentage = 75;
 	try {
-	    downloadFile("https://dl.dropbox.com/u/13174207/PacasCraft/basemods.csv", tmpDir, "basemods.csv");
+	    fileInProgress = "basemods.csv";
+	    downloadFile("http://mcupdate.petercashel.net/csv/basemods.csv", tmpDir, "basemods.csv");
 	    GameUpdater.percentage = 80;
 	    CSVReader reader = new CSVReader(new FileReader(tmpDir + "basemods.csv"));
 	    String[] nextLine;
 	    while ((nextLine = reader.readNext()) != null) {
 		if (!nextLine[0].startsWith("#")) {
 		    GameUpdater.subtaskMessage = "Extracting " + nextLine[1];
+		    System.out.println(nextLine[1]);
+		    fileInProgress = nextLine[1];
 		    downloadFile(nextLine[0], binDir, nextLine[1]);
 		    downloadFile(nextLine[0], tmpDir, nextLine[1]);
-		    unZip((tmpDir + nextLine[1]), jarDir);
 		    GameUpdater.percentage = GameUpdater.percentage + 1;
 		}
 	    }
 	} catch (IOException e) {
 	    e.printStackTrace();
+	    System.out.println("Error During Download Of " + fileInProgress);
+	    System.exit(1);
 	}
 
 	// Rebuild jar
@@ -194,10 +217,14 @@ public class modUpdater {
 	GameUpdater.subtaskMessage = "Downloading mod configs";
 	GameUpdater.percentage = 90;
 	try {
-	    downloadFile("https://dl.dropbox.com/u/13174207/PacasCraft/config.zip", tmpDir, "config.zip");
+	    System.out.println("config.zip");
+	    fileInProgress = "config.zip";
+	    downloadFile("http://mcupdate.petercashel.net/config.zip", tmpDir, "config.zip");
 	    unZip(tmpDir + "config.zip", configDir);
 	} catch (IOException e) {
 	    e.printStackTrace();
+	    System.out.println("Error During Download Of " + fileInProgress);
+	    System.exit(1);
 	}
 	stateString = "";
 	GameUpdater.subtaskMessage = "";

@@ -82,8 +82,15 @@ public class LoginForm extends TransparentPanel {
 		    // get name and path
 		    String name = getClass().getName().replace('.', '/');
 		    name = getClass().getResource("/" + name + ".class").toString();
+		    
+		    System.out.println(name);
+		    
 		    // remove junk
-		    name = name.substring(0, name.indexOf(".jar"));
+		    try {
+			name = name.substring(0, name.indexOf(".jar"));
+		    } catch (Exception e) {
+			name = name.substring(0, name.indexOf(".class"));
+		    }
 		    if (System.getProperty("os.name").toLowerCase().contains("win")) {
 		    	name = name.substring(name.lastIndexOf(':')-1, name.lastIndexOf('/')+1).replace('%', ' ');
 		    } else {
@@ -359,7 +366,7 @@ public class LoginForm extends TransparentPanel {
 
 		BorderLayout layout = new BorderLayout();
 		layout.setHgap(0);
-		layout.setVgap(8);
+		layout.setVgap(0);
 		panel.setLayout(layout);
 
 		GridLayout gl1 = new GridLayout(0, 1);
@@ -376,12 +383,14 @@ public class LoginForm extends TransparentPanel {
 		titles.add(new TransparentLabel("Password:", 4));
 		titles.add(new TransparentLabel("", 4));
 		titles.add(new TransparentLabel("", 4));
-		titles.add(new TransparentLabel("MC Version:", 4));
+		//Hidden Until Needed
+		//titles.add(new TransparentLabel("MC Version:", 4));
 
 		values.add(userName);
 		values.add(password);
 		values.add(rememberBox);
-		values.add(minecraftVersion);
+		//Hidden Until Needed
+		//values.add(minecraftVersion);
 
 		panel.add(titles, "West");
 		panel.add(values, "Center");
@@ -392,8 +401,9 @@ public class LoginForm extends TransparentPanel {
 		titles.setInsets(0, 0, 0, 4);
 		third.setInsets(0, 10, 0, 10);
 
-		third.add(optionsButton);
 		third.add(launchButton);
+		third.add(optionsButton);
+		
 
 		try {
 			if (outdated) {
