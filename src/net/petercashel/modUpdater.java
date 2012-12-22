@@ -32,6 +32,7 @@ public class modUpdater {
     static String configDir = getPath() + "config" + File.separator;
     static String modDir = getPath() + "mods" + File.separator;
     static String binDir = getPath() + "bin" + File.separator;
+    static String resourcesDir = getPath() + "resources" + File.separator;
     static String tmpDir = getPath() + "temp" + File.separator;
     static String jarDir = getPath() + "temp" + File.separator + "jar" + File.separator;
     static String fileInProgress = "";
@@ -74,6 +75,11 @@ public class modUpdater {
 	    dir.mkdirs();
 	}
 	dir = new File(binDir);
+
+	if (!dir.exists()) {
+	    dir.mkdirs();
+	}
+	dir = new File(resourcesDir);
 
 	if (!dir.exists()) {
 	    dir.mkdirs();
@@ -195,7 +201,7 @@ public class modUpdater {
 		    GameUpdater.subtaskMessage = "Extracting " + nextLine[1];
 		    System.out.println(nextLine[1]);
 		    fileInProgress = nextLine[1];
-		    downloadFile(nextLine[0], binDir, nextLine[1]);
+		    downloadFile(nextLine[0], binDir, nextLine[1]); 
 		    downloadFile(nextLine[0], tmpDir, nextLine[1]);
 		    GameUpdater.percentage = GameUpdater.percentage + 1;
 		}
@@ -226,6 +232,33 @@ public class modUpdater {
 	    System.out.println("Error During Download Of " + fileInProgress);
 	    System.exit(1);
 	}
+	
+	GameUpdater.subtaskMessage = "";
+	stateString = "Downloading and Installing New Audio";
+	GameUpdater.percentage = 75;
+	try {
+	    fileInProgress = "audio.csv";
+	    downloadFile("http://mcupdate.petercashel.net/csv/audio.csv", tmpDir, "audio.csv");
+	    GameUpdater.percentage = 91;
+	    CSVReader reader = new CSVReader(new FileReader(tmpDir + "audio.csv"));
+	    String[] nextLine;
+	    while ((nextLine = reader.readNext()) != null) {
+		if (!nextLine[0].startsWith("#")) {
+		    GameUpdater.subtaskMessage = "Downloading " + nextLine[2];
+		    System.out.println(nextLine[2]);
+		    fileInProgress = nextLine[2];
+		    downloadAudioFile(nextLine[0], resourcesDir , nextLine[1] , nextLine[2]);
+		    GameUpdater.percentage = GameUpdater.percentage + 1;
+		}
+	    }
+	} catch (IOException e) {
+	    e.printStackTrace();
+	    System.out.println("Error During Download Of " + fileInProgress);
+	    System.exit(1);
+	}
+
+	
+	
 	stateString = "";
 	GameUpdater.subtaskMessage = "";
 	try {
@@ -258,6 +291,18 @@ public class modUpdater {
 	    }
 	}
 	return sb.toString();
+    }
+
+    static void downloadAudioFile(String url, String dir, String subdir, String filename) throws IOException {
+	URL URL;
+	URL = new URL(url);
+	File path = new File(dir + File.separator + subdir);
+
+	if (!path.exists()) {
+	    path.mkdirs();
+	}
+	File file = new File(path + File.separator + filename);
+	org.apache.commons.io.FileUtils.copyURLToFile(URL, file);
     }
 
     static void downloadFile(String url, String dir, String filename) throws IOException {

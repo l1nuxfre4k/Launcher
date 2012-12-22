@@ -15,7 +15,7 @@ public class launcherUpdater {
 	public static Boolean launcherNeedsUpdate = false;
 
 	//Hard Coded Launcher version
-	private static int launcherVersion = 20121211;
+	private static int launcherVersion = 20121222;
 	
 	public static void doUpdateCheck() {
 		GameUpdater.subtaskMessage = "";
@@ -52,7 +52,7 @@ public class launcherUpdater {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		System.exit(0);	
+		System.exit(10);	
 		
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
