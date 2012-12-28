@@ -95,44 +95,51 @@ public class modUpdater {
 	}
 
 	// Update Code Here
-
-	if ((new File((tmpDir + "7za.exe"))) == null) {
-
-	    if ((new File((getJarDir() + "7za.exe"))) != null) {
-		try {
-		    FileUtils.copyFile(new File((getJarDir() + "7za.exe")), new File((tmpDir + "7za.exe")));
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
-	    } else {
-	    
 	// Grab some tools silently
-	try {
-	    fileInProgress = "tools.csv";
-	    downloadFile("http://mcupdate.petercashel.net/csv/tools.csv", tmpDir, "tools.csv");
-	    CSVReader reader = new CSVReader(new FileReader(tmpDir + "tools.csv"));
-	    String[] nextLine;
-	    while ((nextLine = reader.readNext()) != null) {
-		if (!nextLine[0].startsWith("#")) {
-		    System.out.println(nextLine[1]);
-		    fileInProgress = nextLine[1];
-		    downloadFile(nextLine[0], tmpDir, nextLine[1]);
+
+	if (getPlatform().ordinal() == 2) {
+	    File f = new File(tmpDir + "7za.exe");
+	    if (!f.exists()) {
+		File f2 = new File(getJarDir() + "7za.exe");
+		if (f.exists()) {
+		    try {
+			FileUtils.copyFile(f2, f);
+		    } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		    }
 		}
 	    }
-	} catch (IOException e) {
-	    e.printStackTrace();
-	    System.out.println("Error During Download Of " + fileInProgress);
-	    // Begin attempt to download from source 2
-	    try {
+	    if (!f.exists()) {
+		try {
+		    fileInProgress = "tools.csv";
+		    downloadFile("http://mcupdate.petercashel.net/csv/tools.csv", tmpDir, "tools.csv");
+		    CSVReader reader = new CSVReader(new FileReader(tmpDir + "tools.csv"));
+		    String[] nextLine;
+		    while ((nextLine = reader.readNext()) != null) {
+			if (!nextLine[0].startsWith("#")) {
+			    System.out.println(nextLine[1]);
+			    fileInProgress = nextLine[1];
+			    downloadFile(nextLine[0], tmpDir, nextLine[1]);
+			}
+		    }
+		} catch (IOException e) {
+		    e.printStackTrace();
+		    System.out.println("Error During Download Of " + fileInProgress);
+
+		}
+	    }
+	    // Check if file exists again
+	    if (!f.exists()) {
+
+		try {
 		    downloadFile("https://dl.dropbox.com/u/13174207/PacasCraft/7za.exe", tmpDir, "7za.exe");
-		    
+
 		} catch (IOException e1) {
 		    e1.printStackTrace();
 		    System.out.println("Error During Download Of " + fileInProgress);
 		}
-		
-	}
-	}
+	    }
 	}
 
 	// Download Coremods
@@ -174,8 +181,8 @@ public class modUpdater {
 		    GameUpdater.subtaskMessage = "Downloading " + nextLine[1];
 		    if (Integer.parseInt(nextLine[2]) != 2) {
 			System.out.println(nextLine[1]);
-			    fileInProgress = nextLine[1];
-			    downloadFile(nextLine[0], modDir, nextLine[1]);
+			fileInProgress = nextLine[1];
+			downloadFile(nextLine[0], modDir, nextLine[1]);
 		    }
 		    GameUpdater.percentage = GameUpdater.percentage + 1;
 		}
@@ -221,7 +228,7 @@ public class modUpdater {
 		    GameUpdater.subtaskMessage = "Extracting " + nextLine[1];
 		    System.out.println(nextLine[1]);
 		    fileInProgress = nextLine[1];
-		    downloadFile(nextLine[0], binDir, nextLine[1]); 
+		    downloadFile(nextLine[0], binDir, nextLine[1]);
 		    downloadFile(nextLine[0], tmpDir, nextLine[1]);
 		    GameUpdater.percentage = GameUpdater.percentage + 1;
 		}
@@ -251,7 +258,7 @@ public class modUpdater {
 	    System.out.println("Error During Download Of " + fileInProgress);
 	    System.exit(1);
 	}
-	
+
 	GameUpdater.subtaskMessage = "";
 	stateString = "Downloading and Installing New Audio";
 	GameUpdater.percentage = 75;
@@ -266,7 +273,7 @@ public class modUpdater {
 		    GameUpdater.subtaskMessage = "Downloading " + nextLine[2];
 		    System.out.println(nextLine[2]);
 		    fileInProgress = nextLine[2];
-		    downloadAudioFile(nextLine[0], resourcesDir , nextLine[1] , nextLine[2]);
+		    downloadAudioFile(nextLine[0], resourcesDir, nextLine[1], nextLine[2]);
 		    GameUpdater.percentage = GameUpdater.percentage + 1;
 		}
 	    }
@@ -276,8 +283,6 @@ public class modUpdater {
 	    System.exit(1);
 	}
 
-	
-	
 	stateString = "";
 	GameUpdater.subtaskMessage = "";
 	try {
@@ -338,11 +343,12 @@ public class modUpdater {
     }
 
     static String getPath() {
-//	if (getPlatform().ordinal() == 3) {
-//	    return util.getWorkingDirectory() + File.separator + "Library/Application Support/" + "minecraft/";    
-//	} else {
+	// if (getPlatform().ordinal() == 3) {
+	// return util.getWorkingDirectory() + File.separator +
+	// "Library/Application Support/" + "minecraft/";
+	// } else {
 	return util.getWorkingDirectory() + File.separator;
-//	}
+	// }
     }
 
     static public void unZip(String zipFile, String outputFolder) throws ZipException, IOException {
@@ -398,30 +404,29 @@ public class modUpdater {
     private static enum OS {
 	linux, solaris, windows, macos, unknown;
     }
-    
+
     private static OS getPlatform() {
 	String osName = System.getProperty("os.name").toLowerCase();
 	System.out.println(osName);
 	if (osName.contains("win")) {
-		return OS.windows;
+	    return OS.windows;
 	}
 	if (osName.contains("mac")) {
-		return OS.macos;
+	    return OS.macos;
 	}
 	if (osName.contains("solaris")) {
-		return OS.solaris;
+	    return OS.solaris;
 	}
 	if (osName.contains("sunos")) {
-		return OS.solaris;
+	    return OS.solaris;
 	}
 	if (osName.contains("linux")) {
-		return OS.linux;
+	    return OS.linux;
 	}
 	if (osName.contains("unix")) {
-		return OS.linux;
+	    return OS.linux;
 	}
 	return OS.unknown;
-}
-
+    }
 
 }
