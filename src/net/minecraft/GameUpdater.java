@@ -271,6 +271,10 @@ public class GameUpdater implements Runnable {
 					state = 11;
 					modUpdater.run();	
 				}
+				
+				//Now the repackering
+				jarRepackHandler.repackChecker();
+				
 				String jarSwapdir = util.getWorkingDirectory() + File.separator + "bin" + File.separator;
 				File f = new File(jarSwapdir + "built_minecraft.jar");
 				if(f.exists()) {
@@ -357,8 +361,13 @@ public class GameUpdater implements Runnable {
 			};
 		}
 		String path = dir.getAbsolutePath();
-
+		System.out.println(path);
 		String path1 = path.replace("/minecraft/bin", "");
+		System.out.println(path1);
+		if (getPlatform().ordinal() == 3) {
+			path1 = path1.replace("/Library/Application Support", "");
+		} 
+		System.out.println(path1);
 		System.setProperty("user.home", path1);
 		System.out.println(path1);
 		if (!path.endsWith(File.separator))
@@ -864,4 +873,34 @@ public class GameUpdater implements Runnable {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	    
+	    private static enum OS {
+		linux, solaris, windows, macos, unknown;
+	    }
+	    
+	    private static OS getPlatform() {
+		String osName = System.getProperty("os.name").toLowerCase();
+		System.out.println(osName);
+		if (osName.contains("win")) {
+			return OS.windows;
+		}
+		if (osName.contains("mac")) {
+			return OS.macos;
+		}
+		if (osName.contains("solaris")) {
+			return OS.solaris;
+		}
+		if (osName.contains("sunos")) {
+			return OS.solaris;
+		}
+		if (osName.contains("linux")) {
+			return OS.linux;
+		}
+		if (osName.contains("unix")) {
+			return OS.linux;
+		}
+		return OS.unknown;
+	}
+
 }

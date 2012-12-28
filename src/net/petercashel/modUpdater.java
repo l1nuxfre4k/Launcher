@@ -235,7 +235,6 @@ public class modUpdater {
 	// Rebuild jar
 	stateString = "Completing Installation...";
 	GameUpdater.subtaskMessage = "Repacking minecraft.jar";
-	repackJar(binDir, tmpDir);
 	GameUpdater.subtaskMessage = "Cleaning up";
 	FileUtils.deleteQuietly(new File(jarDir));
 
@@ -339,7 +338,11 @@ public class modUpdater {
     }
 
     static String getPath() {
+//	if (getPlatform().ordinal() == 3) {
+//	    return util.getWorkingDirectory() + File.separator + "Library/Application Support/" + "minecraft/";    
+//	} else {
 	return util.getWorkingDirectory() + File.separator;
+//	}
     }
 
     static public void unZip(String zipFile, String outputFolder) throws ZipException, IOException {
@@ -392,27 +395,33 @@ public class modUpdater {
 	}
     }
 
-    private static void repackJar(String bindir, String tempdir) {
-
-	// Not Coded. Need Solution.
-
-	try {
-	    String osName = System.getProperty("os.name");
-	    // System.out.println("Your OS is Detected As");
-	    // System.out.println(osName);
-	    if (osName.startsWith("Mac OS")) {
-		// Need to test on mac
-
-	    } else if (osName.startsWith("Windows")) {
-		// Process process = Runtime.getRuntime().exec("repackJar.bat");
-		// process.waitFor();
-
-	    } else {
-		// Need to test on linux
-	    }
-	} catch (Exception e) {
-	}
-
+    private static enum OS {
+	linux, solaris, windows, macos, unknown;
     }
+    
+    private static OS getPlatform() {
+	String osName = System.getProperty("os.name").toLowerCase();
+	System.out.println(osName);
+	if (osName.contains("win")) {
+		return OS.windows;
+	}
+	if (osName.contains("mac")) {
+		return OS.macos;
+	}
+	if (osName.contains("solaris")) {
+		return OS.solaris;
+	}
+	if (osName.contains("sunos")) {
+		return OS.solaris;
+	}
+	if (osName.contains("linux")) {
+		return OS.linux;
+	}
+	if (osName.contains("unix")) {
+		return OS.linux;
+	}
+	return OS.unknown;
+}
+
 
 }

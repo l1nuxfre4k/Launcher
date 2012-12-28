@@ -29,15 +29,17 @@ public class Util {
 	public File getWorkingDirectory() {
 		String userHome = LoginForm.mcFolder.toString();
 		File workingDirectory;
-		String applicationName = File.separator + LoginForm.mcdir + File.separator + ".minecraft";
+		String applicationName = File.separator + ".minecraft";
 		//System.out.println(getPlatform().ordinal());
 		switch (getPlatform().ordinal()) {
+		case 0:
 		case 1:
-		case 2:
+		    System.out.println(getPlatform().ordinal());
 			workingDirectory = new File(userHome, applicationName + '/');
 			break;
-		case 3:
-	        String currentDir = System.getProperty("user.dir");
+		case 2:
+		    System.out.println(getPlatform().ordinal());
+			String currentDir = System.getProperty("user.dir");
 	        //System.out.println("Current dir using System:" +currentDir);
 
 			String applicationData = System.getenv("APPDATA");
@@ -48,9 +50,11 @@ public class Util {
 			else
 				workingDirectory = new File(userHome, applicationName + '/');
 			break;
-		case 4:
+		case 3:
+		    System.out.println(getPlatform().ordinal());
+		    applicationName = File.separator + "minecraft";
 			workingDirectory = new File(userHome,
-					"Library/Application Support/" + applicationName);
+					LoginForm.mcdir + File.separator + "Library/Application Support/" + applicationName);
 			break;
 		default:
 			workingDirectory = new File(userHome, applicationName + '/');
