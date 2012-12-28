@@ -37,6 +37,8 @@ public class modUpdateCheck {
 				modpackVersion = Integer.parseInt(nextLine[0]);
 				if (!nextLine[1].isEmpty()) {
 					minecraftVersion = nextLine[1];
+				} else {
+				    repackNeeded = true;
 				}
 			}
 		    }
@@ -67,7 +69,6 @@ public class modUpdateCheck {
 	} else {
 
 	    modpackNeedsUpdate = true;
-	    repackNeeded = true;
 
 	}
 

@@ -27,6 +27,7 @@ public class modUpdater {
     public static String username = "";
     public static String stateString = "Starting Mod Updater";
     static int modpackVersion = 0;
+    static String minecraftVersion;
 
     static String coremodDir = getPath() + "coremods" + File.separator;
     static String configDir = getPath() + "config" + File.separator;
@@ -206,6 +207,7 @@ public class modUpdater {
 		    fileInProgress = "minecraft additions";
 		    downloadFile(("http://assets.minecraft.net/" + nextLine[0] + "/minecraft.jar"), binDir, "base_minecraft.jar");
 		    modpackVersion = Integer.parseInt(nextLine[2]);
+		    minecraftVersion = nextLine[0];
 		}
 	    }
 	} catch (IOException e) {
@@ -215,7 +217,7 @@ public class modUpdater {
 	}
 
 	GameUpdater.subtaskMessage = "";
-	stateString = "Downloading and Installing basemods";
+	stateString = "Downloading basemods";
 	GameUpdater.percentage = 75;
 	try {
 	    fileInProgress = "basemods.csv";
@@ -225,11 +227,11 @@ public class modUpdater {
 	    String[] nextLine;
 	    while ((nextLine = reader.readNext()) != null) {
 		if (!nextLine[0].startsWith("#")) {
-		    GameUpdater.subtaskMessage = "Extracting " + nextLine[1];
+		    GameUpdater.subtaskMessage = "Downloading " + nextLine[1];
 		    System.out.println(nextLine[1]);
 		    fileInProgress = nextLine[1];
 		    downloadFile(nextLine[0], binDir, nextLine[1]);
-		    downloadFile(nextLine[0], tmpDir, nextLine[1]);
+		    //downloadFile(nextLine[0], tmpDir, nextLine[1]);
 		    GameUpdater.percentage = GameUpdater.percentage + 1;
 		}
 	    }
@@ -288,7 +290,7 @@ public class modUpdater {
 	try {
 	    CSVWriter writer;
 	    writer = new CSVWriter(new FileWriter(binDir + "version.csv"), ',');
-	    String[] entries = new String[] { String.valueOf(modpackVersion), modUpdateCheck.minecraftVersion };
+	    String[] entries = new String[] { String.valueOf(modpackVersion), minecraftVersion };
 	    writer.writeNext(entries);
 	    writer.close();
 	} catch (IOException e) {
