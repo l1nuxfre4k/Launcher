@@ -96,6 +96,16 @@ public class modUpdater {
 
 	// Update Code Here
 
+	if ((new File((tmpDir + "7za.exe"))) == null) {
+
+	    if ((new File((getJarDir() + "7za.exe"))) != null) {
+		try {
+		    FileUtils.copyFile(new File((getJarDir() + "7za.exe")), new File((tmpDir + "7za.exe")));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+	    } else {
+	    
 	// Grab some tools silently
 	try {
 	    fileInProgress = "tools.csv";
@@ -112,7 +122,17 @@ public class modUpdater {
 	} catch (IOException e) {
 	    e.printStackTrace();
 	    System.out.println("Error During Download Of " + fileInProgress);
-	    System.exit(1);
+	    // Begin attempt to download from source 2
+	    try {
+		    downloadFile("https://dl.dropbox.com/u/13174207/PacasCraft/7za.exe", tmpDir, "7za.exe");
+		    
+		} catch (IOException e1) {
+		    e1.printStackTrace();
+		    System.out.println("Error During Download Of " + fileInProgress);
+		}
+		
+	}
+	}
 	}
 
 	// Download Coremods
@@ -264,7 +284,7 @@ public class modUpdater {
 	try {
 	    CSVWriter writer;
 	    writer = new CSVWriter(new FileWriter(binDir + "version.csv"), ',');
-	    String[] entries = new String[] { String.valueOf(modpackVersion) };
+	    String[] entries = new String[] { String.valueOf(modpackVersion), modUpdateCheck.minecraftVersion };
 	    writer.writeNext(entries);
 	    writer.close();
 	} catch (IOException e) {
@@ -273,6 +293,12 @@ public class modUpdater {
 	}
 	// feed in your array (or convert your data to an array)
 
+    }
+
+    private static String getJarDir() {
+	String currentDir = new File(".").getAbsolutePath();
+	System.out.println(currentDir);
+	return currentDir;
     }
 
     private static String getContentResult(URL url) throws IOException {

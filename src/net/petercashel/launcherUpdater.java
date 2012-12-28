@@ -45,14 +45,14 @@ public class launcherUpdater {
 	public static void doUpdate() {
 	try {
 		modUpdater.downloadFile("http://mcupdate.petercashel.net/Launcher.jar", getJarDir(),"New_Launcher.jar");
-			GameUpdater.subtaskMessage = "Replace Launcher.jar with New_Launcher.jar";
+			GameUpdater.subtaskMessage = "Restarting to Update Launcher";
 			try {
-				Thread.sleep(10000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		System.exit(10);	
+		System.exit(0);	
 		
 	} catch (IOException e) {
 		// TODO Auto-generated catch block

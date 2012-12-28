@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
+
 import au.com.bytecode.opencsv.CSVReader;
 import net.minecraft.GameUpdater;
 import net.minecraft.Util;
@@ -14,7 +16,9 @@ public class modUpdateCheck {
     static String tmpDir = modUpdater.getPath() + "temp" + File.separator;
     static String binDir = modUpdater.getPath() + "bin" + File.separator;
     static Boolean modpackNeedsUpdate = false;
+    static Boolean repackNeeded = false;
     static int modpackVersion;
+    static String minecraftVersion = "";
 
     public static void doUpdateCheck() {
 
@@ -31,6 +35,9 @@ public class modUpdateCheck {
 		    while ((nextLine = reader.readNext()) != null) {
 			if (!nextLine[0].startsWith("#")) {
 				modpackVersion = Integer.parseInt(nextLine[0]);
+				if (!nextLine[1].isEmpty()) {
+					minecraftVersion = nextLine[1];
+				}
 			}
 		    }
 		} catch (IOException e) {
@@ -43,6 +50,14 @@ public class modUpdateCheck {
 			if (Integer.parseInt(nextLine[2]) > modpackVersion) {
 			modpackNeedsUpdate = true;
 			}
+			if (String.valueOf(nextLine[0]) != null) {
+			    String mcVer = String.valueOf(nextLine[0]);
+			    if (!mcVer.equals(minecraftVersion)) {
+				repackNeeded = true;
+			    }
+			} else {
+			    repackNeeded = true;
+			}
 		    }
 		}
 	    } catch (IOException e) {
@@ -52,11 +67,19 @@ public class modUpdateCheck {
 	} else {
 
 	    modpackNeedsUpdate = true;
+	    repackNeeded = true;
 
 	}
 
 	if (modpackNeedsUpdate == true) {
 	    modUpdater.modUpdate = true;
+	}
+	if (repackNeeded == true) {
+	    try {
+		FileUtils.touch(new File((getJarDir() + "need.repack")));
+	    } catch (IOException e) {
+		e.printStackTrace();
+	    }
 	}
     }
 
