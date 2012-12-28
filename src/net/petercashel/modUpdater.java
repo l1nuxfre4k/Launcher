@@ -114,7 +114,7 @@ public class modUpdater {
 	    if (!f.exists()) {
 		try {
 		    fileInProgress = "tools.csv";
-		    downloadFile("http://mcupdate.petercashel.net/csv/tools.csv", tmpDir, "tools.csv");
+		    downloadFile(launcherProperties.baseUrl +"/csv/tools.csv", tmpDir, "tools.csv");
 		    CSVReader reader = new CSVReader(new FileReader(tmpDir + "tools.csv"));
 		    String[] nextLine;
 		    while ((nextLine = reader.readNext()) != null) {
@@ -150,7 +150,7 @@ public class modUpdater {
 	FileUtils.deleteQuietly(new File(coremodDir));
 	try {
 	    fileInProgress = "coremods.csv";
-	    downloadFile("http://mcupdate.petercashel.net/csv/coremods.csv", tmpDir, "coremods.csv");
+	    downloadFile(launcherProperties.baseUrl +"/csv/coremods.csv", tmpDir, "coremods.csv");
 	    CSVReader reader = new CSVReader(new FileReader(tmpDir + "coremods.csv"));
 	    String[] nextLine;
 	    while ((nextLine = reader.readNext()) != null) {
@@ -174,7 +174,7 @@ public class modUpdater {
 	// Download Mods
 	try {
 	    fileInProgress = "mods.csv";
-	    downloadFile("http://mcupdate.petercashel.net/csv/mods.csv", tmpDir, "mods.csv");
+	    downloadFile(launcherProperties.baseUrl +"/csv/mods.csv", tmpDir, "mods.csv");
 	    CSVReader reader = new CSVReader(new FileReader(tmpDir + "mods.csv"));
 	    String[] nextLine;
 	    while ((nextLine = reader.readNext()) != null) {
@@ -221,7 +221,7 @@ public class modUpdater {
 	GameUpdater.percentage = 75;
 	try {
 	    fileInProgress = "basemods.csv";
-	    downloadFile("http://mcupdate.petercashel.net/csv/basemods.csv", tmpDir, "basemods.csv");
+	    downloadFile(launcherProperties.baseUrl +"/csv/basemods.csv", tmpDir, "basemods.csv");
 	    GameUpdater.percentage = 80;
 	    CSVReader reader = new CSVReader(new FileReader(tmpDir + "basemods.csv"));
 	    String[] nextLine;
@@ -253,7 +253,7 @@ public class modUpdater {
 	try {
 	    System.out.println("config.zip");
 	    fileInProgress = "config.zip";
-	    downloadFile("http://mcupdate.petercashel.net/config.zip", tmpDir, "config.zip");
+	    downloadFile(launcherProperties.baseUrl +"/config.zip", tmpDir, "config.zip");
 	    unZip(tmpDir + "config.zip", configDir);
 	} catch (IOException e) {
 	    e.printStackTrace();
@@ -266,7 +266,7 @@ public class modUpdater {
 	GameUpdater.percentage = 75;
 	try {
 	    fileInProgress = "audio.csv";
-	    downloadFile("http://mcupdate.petercashel.net/csv/audio.csv", tmpDir, "audio.csv");
+	    downloadFile(launcherProperties.baseUrl +"/csv/audio.csv", tmpDir, "audio.csv");
 	    GameUpdater.percentage = 91;
 	    CSVReader reader = new CSVReader(new FileReader(tmpDir + "audio.csv"));
 	    String[] nextLine;

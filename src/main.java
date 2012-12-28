@@ -1,14 +1,12 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
-
-
+import net.petercashel.launcherProperties;
 
 // This class handles the OS Specific varible setting and what not.
 // Designed to replace the launcher scripts.
 
 // Class to reinitalise to is net.minecraft.LauncherFrame
-
 
 
 public class main {
@@ -26,14 +24,14 @@ public class main {
 	
 	     ProcessBuilder pb = new ProcessBuilder("java", "-classpath", "Launcher.jar", "net.minecraft.MinecraftLauncher");
 	     Map<String, String> env = pb.environment();
-	     env.put("APPDATA", (getJarDir() + File.separator + "PacasLand"));
+	     env.put("APPDATA", (getJarDir() + File.separator + launcherProperties.installFolder));
 	     switch (getPlatform().ordinal()) {
 			case 0:
 			case 1:
 			    System.out.println(getPlatform().ordinal());
 				//Linux Code
-			    	env.put("HOME", (getJarDir() + File.separator + "PacasLand"));
-			    	env.put("user.home", (getJarDir() + File.separator + "PacasLand"));
+			    	env.put("HOME", (getJarDir() + File.separator + launcherProperties.installFolder));
+			    	env.put("user.home", (getJarDir() + File.separator + launcherProperties.installFolder));
 			    	break;
 			case 2:
 			    System.out.println(getPlatform().ordinal());
@@ -42,8 +40,8 @@ public class main {
 			case 3:
 			    System.out.println(getPlatform().ordinal());
 				//Mac Code
-			    	env.put("user.home", (getJarDir() + File.separator + "PacasLand"));
-				env.put("HOME", (getJarDir() + File.separator + "PacasLand"));
+			    	env.put("user.home", (getJarDir() + File.separator + launcherProperties.installFolder));
+				env.put("HOME", (getJarDir() + File.separator + launcherProperties.installFolder));
 				break;
 			default:
 	    }

@@ -44,6 +44,9 @@ import javax.swing.event.HyperlinkListener;
 
 import java.util.Comparator;
 import java.util.Arrays;
+
+import net.petercashel.launcherProperties;
+
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 public class LoginForm extends TransparentPanel {
@@ -138,7 +141,7 @@ public class LoginForm extends TransparentPanel {
 		for (int i = 0; i < list.length; i++) {
 			minecraftVersion.addItem(list[i]);
 		}
-		minecraftVersion.setSelectedItem("PacasLand");
+		minecraftVersion.setSelectedItem(launcherProperties.installFolder);
 		
 	}
 
@@ -153,7 +156,7 @@ public class LoginForm extends TransparentPanel {
 		launchButton.setEnabled(false);
 		
 		//Changes to make auto select
-		minecraftVersion.setSelectedItem("PacasLand");
+		minecraftVersion.setSelectedItem(launcherProperties.installFolder);
 		launchButton.setEnabled(true);
 		mcdir = minecraftVersion.getSelectedItem().toString();
 		readUsername();
@@ -320,7 +323,7 @@ public class LoginForm extends TransparentPanel {
 				public void run() {
 					try {
 						editorPane.setPage(new URL(
-								"http://mcupdate.tumblr.com/"));
+								launcherProperties.loginViewURL));
 					} catch (Exception e) {
 						e.printStackTrace();
 						editorPane
