@@ -89,6 +89,20 @@ public class jarRepackHandler {
 	    case 3:
 		System.out.println(getPlatform().ordinal());
 		try {
+		    //CHMOD +x
+		    ProcessBuilder pbfix = new ProcessBuilder("chmod", "+x", "MacRepackJar.cmd");
+		    Map<String, String> envfix = pbfix.environment();
+		    pbfix.directory(new File(jarDir));
+		    Process pfix = pbfix.start();
+		    try {
+			String response = convertStreamToStr(pfix.getInputStream());
+			pfix.waitFor();
+			Thread.sleep(5000);
+
+		    } catch (InterruptedException e) {
+			e.printStackTrace();
+		    }
+		    
 		    ProcessBuilder pb = new ProcessBuilder("./MacRepackJar.cmd");
 		    Map<String, String> env = pb.environment();
 		    pb.directory(new File(jarDir));

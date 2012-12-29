@@ -3,6 +3,7 @@ package net.petercashel;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Map;
 
 import au.com.bytecode.opencsv.CSVReader;
 import net.minecraft.GameUpdater;
@@ -15,7 +16,7 @@ public class launcherUpdater {
     public static Boolean launcherNeedsUpdate = false;
 
     // Hard Coded Launcher version
-    private static int launcherVersion = 20121222;
+    private static int launcherVersion = 20121229;
 
     public static void doUpdateCheck() {
 	GameUpdater.subtaskMessage = "";
@@ -44,14 +45,19 @@ public class launcherUpdater {
 
     public static void doUpdate() {
 	try {
-	    modUpdater.downloadFile("http://mcupdate.petercashel.net/Launcher.jar", getJarDir(), "New_Launcher.jar");
+	    modUpdater.downloadFile("http://mcupdate.petercashel.net/autoupdate.jar", getJarDir(), "autoupdate.jar");
 	    GameUpdater.subtaskMessage = "Restarting to Update Launcher";
 	    try {
-		Thread.sleep(1000);
+		Thread.sleep(6000);
 	    } catch (InterruptedException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	    }
+	    //PROCESS BUILDER TIME!
+	    ProcessBuilder pb = new ProcessBuilder("java", "-classpath", "autoupdater.jar", "main");
+	    Map<String, String> env = pb.environment();
+	    pb.directory(new File(getJarDir()));
+	    Process p = pb.start();
 	    System.exit(0);
 
 	} catch (IOException e) {
@@ -61,12 +67,17 @@ public class launcherUpdater {
 
     }
 
-    public static String getJarDir() {
+    static String getJarDir() {
 
-	// Dirty Cheats
-	String currentDir = new File(".").getAbsolutePath();
-	System.out.println(currentDir);
-	return currentDir;
+	String currentDir;
+	try {
+	    currentDir = new File(".").getCanonicalPath();
+	    return currentDir + File.separator;
+	} catch (IOException e) {
+	    e.printStackTrace();
+	    currentDir = new File(".").getAbsolutePath();
+	}
+	return currentDir + File.separator;
 
     }
 

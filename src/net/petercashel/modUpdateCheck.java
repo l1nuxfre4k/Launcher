@@ -19,6 +19,7 @@ public class modUpdateCheck {
     static Boolean repackNeeded = false;
     static int modpackVersion;
     static String minecraftVersion = "";
+    private static boolean minecraftVersionBroken;
 
     public static void doUpdateCheck() {
 
@@ -35,10 +36,16 @@ public class modUpdateCheck {
 		    while ((nextLine = reader.readNext()) != null) {
 			if (!nextLine[0].startsWith("#")) {
 			    modpackVersion = Integer.parseInt(nextLine[0]);
-			    if (!nextLine[1].isEmpty()) {
+			    
+			    try {
+			    if (nextLine[1] != null) {
 				minecraftVersion = nextLine[1];
 			    } else {
 				repackNeeded = true;
+			    }
+			    } catch (ArrayIndexOutOfBoundsException e) {
+				e.printStackTrace();
+				minecraftVersionBroken = true;
 			    }
 			}
 		    }
@@ -73,6 +80,9 @@ public class modUpdateCheck {
 	}
 
 	if (modpackNeedsUpdate == true) {
+	    modUpdater.modUpdate = true;
+	}
+	if (minecraftVersionBroken == true) {
 	    modUpdater.modUpdate = true;
 	}
 	if (repackNeeded == true) {
