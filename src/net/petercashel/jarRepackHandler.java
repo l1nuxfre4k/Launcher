@@ -30,7 +30,7 @@ public class jarRepackHandler {
 		case 2:
 		    System.out.println(getPlatform().ordinal());
 		    try {
-			downloadFile(launcherProperties.baseUrl +"/WinRepackJar.bat", getJarDir() + File.separator, "WinRepackJar.bat");
+			downloadFile(launcherProperties.baseUrl + "/WinRepackJar.bat", getJarDir() + File.separator, "WinRepackJar.bat");
 		    } catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -40,7 +40,7 @@ public class jarRepackHandler {
 		case 3:
 		    System.out.println(getPlatform().ordinal());
 		    try {
-			downloadFile(launcherProperties.baseUrl +"/MacRepackJar.cmd", getJarDir() + File.separator, "MacRepackJar.cmd");
+			downloadFile(launcherProperties.baseUrl + "/MacRepackJar.cmd", getJarDir() + File.separator, "MacRepackJar.cmd");
 		    } catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -130,17 +130,16 @@ public class jarRepackHandler {
 	return currentDir;
 
     }
-    
+
     public String trimLastChar(String str) {
 
-	  if (str.length() > 0 && str.charAt(str.length()-1)=='x') {
-	    str = str.substring(0, str.length()-1);
+	if (str.length() > 0 && str.charAt(str.length() - 1) == 'x') {
+	    str = str.substring(0, str.length() - 1);
 	    return str;
-	  }
-	  else {
+	} else {
 	    return str;
-	  }
 	}
+    }
 
     private static enum OS {
 	linux, solaris, windows, macos, unknown;

@@ -34,12 +34,12 @@ public class modUpdateCheck {
 		    String[] nextLine;
 		    while ((nextLine = reader.readNext()) != null) {
 			if (!nextLine[0].startsWith("#")) {
-				modpackVersion = Integer.parseInt(nextLine[0]);
-				if (!nextLine[1].isEmpty()) {
-					minecraftVersion = nextLine[1];
-				} else {
-				    repackNeeded = true;
-				}
+			    modpackVersion = Integer.parseInt(nextLine[0]);
+			    if (!nextLine[1].isEmpty()) {
+				minecraftVersion = nextLine[1];
+			    } else {
+				repackNeeded = true;
+			    }
 			}
 		    }
 		} catch (IOException e) {
@@ -50,7 +50,7 @@ public class modUpdateCheck {
 		while ((nextLine = reader.readNext()) != null) {
 		    if (!nextLine[0].startsWith("#")) {
 			if (Integer.parseInt(nextLine[2]) > modpackVersion) {
-			modpackNeedsUpdate = true;
+			    modpackNeedsUpdate = true;
 			}
 			if (String.valueOf(nextLine[0]) != null) {
 			    String mcVer = String.valueOf(nextLine[0]);
