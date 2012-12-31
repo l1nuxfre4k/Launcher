@@ -34,7 +34,7 @@ public class Util {
 	switch (getPlatform().ordinal()) {
 	    case 0:
 	    case 1:
-		workingDirectory = new File(userHome, applicationName + '/');
+		workingDirectory = new File(userHome, LoginForm.mcdir + File.separator + applicationName + '/');
 		break;
 	    case 2:
 		String currentDir = System.getProperty("user.dir");
@@ -49,7 +49,7 @@ public class Util {
 		workingDirectory = new File(userHome, LoginForm.mcdir + File.separator + "Library/Application Support/" + applicationName);
 		break;
 	    default:
-		workingDirectory = new File(userHome, applicationName + '/');
+		workingDirectory = new File(userHome, LoginForm.mcdir + File.separator + applicationName + '/');
 	}
 	if ((!workingDirectory.exists()) && (!workingDirectory.mkdirs()))
 	    throw new RuntimeException("The working directory could not be created: " + workingDirectory);

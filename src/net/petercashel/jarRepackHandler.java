@@ -24,11 +24,15 @@ public class jarRepackHandler {
 	    switch (getPlatform().ordinal()) {
 		case 0:
 		case 1:
-		    System.out.println(getPlatform().ordinal());
+		   try {
+			downloadFile(launcherProperties.baseUrl + "/nixRepackJar.sh", getJarDir() + File.separator, "nixRepackJar.sh");
+		    } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		    }
 		    // Linux Code
 		    break;
 		case 2:
-		    System.out.println(getPlatform().ordinal());
 		    try {
 			downloadFile(launcherProperties.baseUrl + "/WinRepackJar.bat", getJarDir() + File.separator, "WinRepackJar.bat");
 		    } catch (IOException e) {
@@ -38,7 +42,6 @@ public class jarRepackHandler {
 		    // Win Code
 		    break;
 		case 3:
-		    System.out.println(getPlatform().ordinal());
 		    try {
 			downloadFile(launcherProperties.baseUrl + "/MacRepackJar.cmd", getJarDir() + File.separator, "MacRepackJar.cmd");
 		    } catch (IOException e) {
@@ -64,6 +67,36 @@ public class jarRepackHandler {
 	    case 0:
 	    case 1:
 		System.out.println(getPlatform().ordinal());
+		try {
+		    //CHMOD +x
+		    ProcessBuilder linpbfix = new ProcessBuilder("chmod", "+x", "nixRepackJar.sh");
+		    Map<String, String> linenvfix = linpbfix.environment();
+		    linpbfix.directory(new File(jarDir));
+		    Process linpfix = linpbfix.start();
+		    try {
+			String response = convertStreamToStr(linpfix.getInputStream());
+			linpfix.waitFor();
+			Thread.sleep(5000);
+
+		    } catch (InterruptedException e) {
+			e.printStackTrace();
+		    }
+		    
+		    ProcessBuilder linpb = new ProcessBuilder("./nixRepackJar.sh");
+		    Map<String, String> linenv = linpb.environment();
+		    linpb.directory(new File(jarDir));
+		    Process linp = linpb.start();
+		    try {
+			String response = convertStreamToStr(linp.getInputStream());
+			linp.waitFor();
+			Thread.sleep(5000);
+
+		    } catch (InterruptedException e) {
+			e.printStackTrace();
+		    }
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
 		// Linux Code
 		break;
 	    case 2:
