@@ -284,6 +284,17 @@ public class modUpdater {
 	    System.out.println("Error During Download Of " + fileInProgress);
 	    System.exit(1);
 	}
+	
+	//Download server list if its non existant
+	File servList = new File(getPath() + "servers.dat");
+	if (!servList.exists()) {
+		    try {
+			downloadFile(launcherProperties.baseUrl + "/servers.dat", getPath(), "servers.dat");
+		    } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		    }
+		}
 
 	stateString = "";
 	GameUpdater.subtaskMessage = "";
