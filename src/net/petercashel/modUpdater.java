@@ -114,7 +114,7 @@ public class modUpdater {
 	    if (!f.exists()) {
 		try {
 		    fileInProgress = "tools.csv";
-		    downloadFile(launcherProperties.baseUrl + "/csv/tools.csv", tmpDir, "tools.csv");
+		    downloadFile(launcherProperties.getProp("baseUrl") + "/csv/tools.csv", tmpDir, "tools.csv");
 		    CSVReader reader = new CSVReader(new FileReader(tmpDir + "tools.csv"));
 		    String[] nextLine;
 		    while ((nextLine = reader.readNext()) != null) {
@@ -150,7 +150,7 @@ public class modUpdater {
 	FileUtils.deleteQuietly(new File(coremodDir));
 	try {
 	    fileInProgress = "coremods.csv";
-	    downloadFile(launcherProperties.baseUrl + "/csv/coremods.csv", tmpDir, "coremods.csv");
+	    downloadFile(launcherProperties.getProp("baseUrl") + "/csv/coremods.csv", tmpDir, "coremods.csv");
 	    CSVReader reader = new CSVReader(new FileReader(tmpDir + "coremods.csv"));
 	    String[] nextLine;
 	    while ((nextLine = reader.readNext()) != null) {
@@ -174,7 +174,7 @@ public class modUpdater {
 	// Download Mods
 	try {
 	    fileInProgress = "mods.csv";
-	    downloadFile(launcherProperties.baseUrl + "/csv/mods.csv", tmpDir, "mods.csv");
+	    downloadFile(launcherProperties.getProp("baseUrl") + "/csv/mods.csv", tmpDir, "mods.csv");
 	    CSVReader reader = new CSVReader(new FileReader(tmpDir + "mods.csv"));
 	    String[] nextLine;
 	    while ((nextLine = reader.readNext()) != null) {
@@ -221,7 +221,7 @@ public class modUpdater {
 	GameUpdater.percentage = 75;
 	try {
 	    fileInProgress = "basemods.csv";
-	    downloadFile(launcherProperties.baseUrl + "/csv/basemods.csv", tmpDir, "basemods.csv");
+	    downloadFile(launcherProperties.getProp("baseUrl") + "/csv/basemods.csv", tmpDir, "basemods.csv");
 	    GameUpdater.percentage = 80;
 	    CSVReader reader = new CSVReader(new FileReader(tmpDir + "basemods.csv"));
 	    String[] nextLine;
@@ -253,7 +253,7 @@ public class modUpdater {
 	try {
 	    System.out.println("config.zip");
 	    fileInProgress = "config.zip";
-	    downloadFile(launcherProperties.baseUrl + "/config.zip", tmpDir, "config.zip");
+	    downloadFile(launcherProperties.getProp("baseUrl") + "/config.zip", tmpDir, "config.zip");
 	    unZip(tmpDir + "config.zip", configDir);
 	} catch (IOException e) {
 	    e.printStackTrace();
@@ -266,7 +266,7 @@ public class modUpdater {
 	GameUpdater.percentage = 75;
 	try {
 	    fileInProgress = "audio.csv";
-	    downloadFile(launcherProperties.baseUrl + "/csv/audio.csv", tmpDir, "audio.csv");
+	    downloadFile(launcherProperties.getProp("baseUrl") + "/csv/audio.csv", tmpDir, "audio.csv");
 	    GameUpdater.percentage = 91;
 	    CSVReader reader = new CSVReader(new FileReader(tmpDir + "audio.csv"));
 	    String[] nextLine;
@@ -289,7 +289,7 @@ public class modUpdater {
 	File servList = new File(getPath() + "servers.dat");
 	if (!servList.exists()) {
 		    try {
-			downloadFile(launcherProperties.baseUrl + "/servers.dat", getPath(), "servers.dat");
+			downloadFile(launcherProperties.getProp("baseUrl") + "/servers.dat", getPath(), "servers.dat");
 		    } catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

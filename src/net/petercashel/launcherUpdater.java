@@ -24,7 +24,7 @@ public class launcherUpdater {
 	GameUpdater.percentage = 05;
 	// Download basemods + correct mc jar
 	try {
-	    modUpdater.downloadFile(launcherProperties.baseUrl + "/csv/version.csv", tmpDir, "version.csv");
+	    modUpdater.downloadFile(launcherProperties.getProp("baseUrl") + "/csv/version.csv", tmpDir, "version.csv");
 	    CSVReader reader = new CSVReader(new FileReader(tmpDir + "version.csv"));
 	    String[] nextLine;
 	    while ((nextLine = reader.readNext()) != null) {
@@ -45,7 +45,7 @@ public class launcherUpdater {
 
     public static void doUpdate() {
 	try {
-	    modUpdater.downloadFile(launcherProperties.baseUrl + "/autoupdate.jar", getJarDir(), "autoupdate.jar");
+	    modUpdater.downloadFile(launcherProperties.getProp("baseUrl") + "/autoupdate.jar", getJarDir(), "autoupdate.jar");
 	    GameUpdater.subtaskMessage = "Restarting to Update Launcher";
 	    try {
 		Thread.sleep(6000);

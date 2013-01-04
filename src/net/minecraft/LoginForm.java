@@ -138,7 +138,7 @@ public class LoginForm extends TransparentPanel {
 	for (int i = 0; i < list.length; i++) {
 	    minecraftVersion.addItem(list[i]);
 	}
-	minecraftVersion.setSelectedItem(launcherProperties.installFolder);
+	minecraftVersion.setSelectedItem(launcherProperties.getProp("installFolder"));
 
     }
 
@@ -153,7 +153,7 @@ public class LoginForm extends TransparentPanel {
 	launchButton.setEnabled(false);
 
 	// Changes to make auto select
-	minecraftVersion.setSelectedItem(launcherProperties.installFolder);
+	minecraftVersion.setSelectedItem(launcherProperties.getProp("installFolder"));
 	launchButton.setEnabled(true);
 	mcdir = minecraftVersion.getSelectedItem().toString();
 	readUsername();
@@ -313,7 +313,7 @@ public class LoginForm extends TransparentPanel {
 		@Override
 		public void run() {
 		    try {
-			editorPane.setPage(new URL(launcherProperties.loginViewURL));
+			editorPane.setPage(new URL(launcherProperties.getProp("loginViewURL")));
 		    } catch (Exception e) {
 			e.printStackTrace();
 			editorPane.setText("<html><body><font color=\"#808080\"><br><br><br><br><br><br><br><center>Failed to update news<br>" + e.toString()

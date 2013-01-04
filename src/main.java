@@ -20,7 +20,7 @@ public class main {
 	// OS Specific relaunch stuff now.
 	// launcherProperties.initProps();
 	try {
-	    FileUtils.forceMkdir(new File(getJarDir() + launcherProperties.installFolder));
+	    FileUtils.forceMkdir(new File(getJarDir() + launcherProperties.getProp("installFolder")));
 	} catch (IOException e1) {
 	    // TODO Auto-generated catch block
 	    e1.printStackTrace();
@@ -29,21 +29,21 @@ public class main {
 
 	    ProcessBuilder pb = new ProcessBuilder("java", "-classpath", "Launcher.jar", "net.minecraft.MinecraftLauncher");
 	    Map<String, String> env = pb.environment();
-	    env.put("APPDATA", (getJarDir() + launcherProperties.installFolder));
+	    env.put("APPDATA", (getJarDir() + launcherProperties.getProp("installFolder")));
 	    switch (getPlatform().ordinal()) {
 		case 0:
 		case 1:
 		    // Linux Code
-		    env.put("HOME", (getJarDir() + launcherProperties.installFolder));
-		    env.put("user.home", (getJarDir() + launcherProperties.installFolder));
+		    env.put("HOME", (getJarDir() + launcherProperties.getProp("installFolder")));
+		    env.put("user.home", (getJarDir() + launcherProperties.getProp("installFolder")));
 		    break;
 		case 2:
 		    // Win Code
 		    break;
 		case 3:
 		    // Mac Code
-		    env.put("user.home", (getJarDir() + launcherProperties.installFolder));
-		    env.put("HOME", (getJarDir() + launcherProperties.installFolder));
+		    env.put("user.home", (getJarDir() + launcherProperties.getProp("installFolder")));
+		    env.put("HOME", (getJarDir() + launcherProperties.getProp("installFolder")));
 		    break;
 		default:
 	    }

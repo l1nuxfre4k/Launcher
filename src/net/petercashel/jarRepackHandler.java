@@ -25,7 +25,7 @@ public class jarRepackHandler {
 		case 0:
 		case 1:
 		   try {
-			downloadFile(launcherProperties.baseUrl + "/nixRepackJar.sh", getJarDir() + File.separator, "nixRepackJar.sh");
+			downloadFile(launcherProperties.getProp("baseUrl") + "/nixRepackJar.sh", getJarDir() + File.separator, "nixRepackJar.sh");
 		    } catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -34,7 +34,7 @@ public class jarRepackHandler {
 		    break;
 		case 2:
 		    try {
-			downloadFile(launcherProperties.baseUrl + "/WinRepackJar.bat", getJarDir() + File.separator, "WinRepackJar.bat");
+			downloadFile(launcherProperties.getProp("baseUrl") + "/WinRepackJar.bat", getJarDir() + File.separator, "WinRepackJar.bat");
 		    } catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -43,7 +43,7 @@ public class jarRepackHandler {
 		    break;
 		case 3:
 		    try {
-			downloadFile(launcherProperties.baseUrl + "/MacRepackJar.cmd", getJarDir() + File.separator, "MacRepackJar.cmd");
+			downloadFile(launcherProperties.getProp("baseUrl") + "/MacRepackJar.cmd", getJarDir() + File.separator, "MacRepackJar.cmd");
 		    } catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
